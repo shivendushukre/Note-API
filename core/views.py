@@ -1,22 +1,16 @@
-from django.shortcuts import render
-from django.http import JsonResponse
 
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-
-class TestView(APIView):
-    def get(self, request, *args, **kwargs):
-        data = {
-            'name':'shivendu',
-            'age':20
-        }
-        return Response(data)
+# rest imports
+from rest_framework import generics
+from .serializers import NoteSerializer
+from .models import Note
 
 
-# def test_view(request):
-#     data={
-#         'name':'shivendu',
-#         'age':20
-#     }
-#     return JsonResponse(data)
+class NoteList(generics.ListCreateAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+    
+
+class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+
